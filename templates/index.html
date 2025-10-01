@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">💰 Personal Finance Tracker</div>
+        <div class="nav-right">
+            <a href="{{ url_for('home') }}">Add Transaction</a>
+            <a href="{{ url_for('summary') }}">View Summary</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Welcome to Your Personal Finance Tracker</h1>
+        <p class="subtitle">Track your income and expenses, visualize your budget, and take control of your finances.</p>
+
+        <!-- Transaction Form -->
+        <div class="card">
+            <h2>Add a Transaction</h2>
+            <form action="{{ url_for('add_transaction') }}" method="POST">
+                <label for="type">Type:</label>
+                <select name="type" id="type" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+
+                <label for="amount">Amount ($):</label>
+                <input type="number" name="amount" step="0.01" required>
+
+                <label for="category">Category:</label>
+                <input type="text" name="category" placeholder="e.g., rent, salary, groceries" required>
+
+                <button type="submit" class="btn-add">+ Add Transaction</button>
+            </form>
+        </div>
+
+        <!-- Quick Link to Summary -->
+        <div class="center">
+            <a href="{{ url_for('summary') }}" class="btn-summary">📊 View Summary</a>
+        </div>
+    </div>
+</body>
+</html>

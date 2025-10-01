@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Summary</h1>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="card income">
+            <h3>Total Income</h3>
+            <p>${{ "%.2f"|format(income) }}</p>
+        </div>
+        <div class="card expenses">
+            <h3>Total Expenses</h3>
+            <p>${{ "%.2f"|format(expenses) }}</p>
+        </div>
+        <div class="card balance">
+            <h3>Balance</h3>
+            <p>${{ "%.2f"|format(balance) }}</p>
+        </div>
+    </div>
+
+    <!-- Breakdown -->
+    <h2>Breakdown by Category</h2>
+    <ul>
+        {% for category, total in category_totals.items() %}
+            <li>{{ category }}: ${{ "%.2f"|format(total) }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Visual Charts -->
+    <h2>Visual Breakdown</h2>
+    <div class="charts">
+        <div class="chart-card">
+            <canvas id="categoryChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <canvas id="incomeExpenseChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <h2>Transactions</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        {% for t in transactions %}
+        <tr>
+            <td>{{ t["type"] }}</td>
+            <td>${{ "%.2f"|format(t["amount"]) }}</td>
+            <td>{{ t["category"] }}</td>
+            <td>
+                <a href="{{ url_for('delete_transaction', id=t['_id']) }}" class="btn-delete">Delete</a>
+              </td>
+              
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/" class="btn-add">+ Add Another Transaction</a>
+</div>
+
+<script>
+    // Data from Flask/Jinja
+    const categoryData = {{ category_totals|tojson|safe }};
+    const totalIncome = {{ income|tojson }};
+    const totalExpenses = {{ expenses|tojson }};
+
+    // Pie Chart - Categories
+    new Chart(document.getElementById('categoryChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(categoryData),
+            datasets: [{
+                data: Object.values(categoryData),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Bar Chart - Income vs Expenses
+    new Chart(document.getElementById('incomeExpenseChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Income', 'Expenses'],
+            datasets: [{
+                label: 'Amount',
+                data: [totalIncome, totalExpenses],
+                backgroundColor: ['#36A2EB', '#FF6384']
+            }]
+        },
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
