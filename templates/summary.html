@@ -72,9 +72,9 @@
 
 <script>
     // Data from Flask/Jinja
-    const categoryData = {{ category_totals|tojson|safe }};
-    const totalIncome = {{ income|tojson }};
-    const totalExpenses = {{ expenses|tojson }};
+    const categoryData = JSON.parse('{{ category_totals|tojson|safe }}');
+    const totalIncome = parseFloat('{{ income|tojson }}');
+    const totalExpenses = parseFloat('{{ expenses|tojson }}');
 
     // Pie Chart - Categories
     new Chart(document.getElementById('categoryChart').getContext('2d'), {

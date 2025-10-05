@@ -7,9 +7,9 @@
 
 from flask import Flask, render_template, request, redirect, url_for
 from collections import defaultdict
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-from dotenv import load_dotenv
+from pymongo import MongoClient # type: ignore
+from bson.objectid import ObjectId # type: ignore
+from dotenv import load_dotenv  # type: ignore
 import os
 
 # ---------------------------------------------
