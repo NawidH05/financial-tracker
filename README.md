@@ -1,6 +1,6 @@
 ## Personal Finance Tracker
 
-    A simple web app to track your income and expenses, visualize them with interactive charts, and store everything securely in MongoDB Atlas.
+   A simple Python-based finance tool that helps users manage income, expenses, and calculate savings. It provides a breakdown of spending by category and generates insights for better budgeting decisions.
 
 ## Features
 
@@ -26,11 +26,12 @@
 
     Templating: Jinja2
 
-    Styling: Bootstrap-inspired custom CSS
+    Styling:CSS
+
 
 ## Screenshots
-![alt text](image.png)
-![alt text](image-1.png)
+![dashboard](landing-page.png)
+![summary page](summary-page.png)
 ---
 
 ## Setup Instructions
@@ -51,7 +52,7 @@ MONGO_URI=your-mongodb-connection-string
 python app.py
 
 
-Go to 👉 http://127.0.0.1:5000/ in your browser.
+Go to http://127.0.0.1:5000/ in your browser.
 
 ## Project Structure
 personal-finance-app/
@@ -62,3 +63,9 @@ personal-finance-app/
 │── README.md           # Documentation  
 │── .env                # MongoDB URI (ignored by Git)  
 │── .gitignore          # Ignore cache + sensitive files 
+
+## Key Takeaways
+This project strengthened my understanding of:
+- Full-stack development with Flask and MongoDB
+- Data visualization using Chart.js
+- Managing CRUD operations and backend integration
